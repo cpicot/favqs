@@ -14,8 +14,8 @@ final class LoginViewController: UIViewController {
     private weak var delegate: LoginDelegate?
 
     // MARK: - Setup
-    static func instance(webServiceClient: WebServiceClient,
-                         delegate: LoginDelegate) -> UIViewController {
+    static func instantiate(webServiceClient: WebServiceClient,
+                            delegate: LoginDelegate) -> UIViewController {
         let viewController = StoryboardScene.LoginViewController.loginViewController.instantiate()
         viewController.delegate = delegate
         return viewController
@@ -38,7 +38,7 @@ private extension LoginViewController {
 // MARK: - Private Funcs
 private extension LoginViewController {
     func login() {
-        // Make WS request
+        // TODO: Make WS request
         delegate?.launchApp()
     }
 }

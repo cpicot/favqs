@@ -63,7 +63,19 @@ private extension AppCoordinator {
 
 extension AppCoordinator: MyAppDelegate {
     func showApp() {
-        print("showApp")
+        let coordinator: FavouritesCoordinator = FavouritesCoordinator(
+            webServiceClient: webServiceClient,
+            delegate: self)
+        push(childCoordinator: coordinator)
+        _ = coordinator.start().subscribe(onSuccess: { [weak self] controller in
+            self?.refreshRootVC(with: controller)
+        })
+        _ = coordinator.finished.subscribe(onSuccess: { [weak self] _ in
+            guard let strongSelf = self else { return }
+
+            strongSelf.popChildCoordinator()
+            strongSelf.showLogin()
+        })
     }
 
     func showLogin() {

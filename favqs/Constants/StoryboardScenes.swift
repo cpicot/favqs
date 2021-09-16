@@ -12,6 +12,13 @@ import UIKit
 
 // swiftlint:disable explicit_type_interface identifier_name line_length type_body_length type_name
 internal enum StoryboardScene {
+  internal enum FavouritesViewController: StoryboardType {
+    internal static let storyboardName = "FavouritesViewController"
+
+    internal static let initialScene = InitialSceneType<favqs.FavouritesViewController>(storyboard: FavouritesViewController.self)
+
+    internal static let favouritesViewController = SceneType<favqs.FavouritesViewController>(storyboard: FavouritesViewController.self, identifier: "FavouritesViewController")
+  }
   internal enum LaunchScreen: StoryboardType {
     internal static let storyboardName = "LaunchScreen"
 
