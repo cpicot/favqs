@@ -1,0 +1,60 @@
+# rule identifiers to exclude from running
+disabled_rules:
+  - trailing_whitespace
+  - todo
+  - unused_closure_parameter
+  - closure_parameter_position
+  - notification_center_detachment
+  - orphaned_doc_comment
+
+# some rules are only opt-in
+opt_in_rules:
+  - empty_count
+  - force_unwrapping
+  #- explicit_type_interface
+
+# paths to include during linting. `--path` is ignored if present.
+included:
+ - favqs
+
+# paths to ignore during linting. Takes precedence over `included`.
+excluded:
+  - Pods
+
+line_length:
+  warning: 150
+  error: 250
+
+file_length:
+  warning: 600
+  error: 750
+
+type_body_length:
+  warning: 400
+  error: 600
+
+function_parameter_count:
+  warning: 6
+  error: 10
+
+cyclomatic_complexity:
+  warning: 15
+  error: 20
+
+function_body_length:
+  warning: 50
+  error: 70
+
+# naming rules can set warnings/errors for min_length and max_length
+# additionally they can set excluded names
+type_name:
+  min_length: 3 # only warning
+  max_length: # warning and error
+    warning: 150
+    error: 1000
+
+identifier_name:
+  min_length: 3 # only warning
+  max_length: # warning and error
+    warning: 70
+    error: 100

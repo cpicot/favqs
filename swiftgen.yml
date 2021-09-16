@@ -1,0 +1,7 @@
+output_dir: favqs/Constants/
+
+ib:
+  inputs: favqs/
+  outputs:
+    templateName: scenes-swift4
+    output: StoryboardScenes.swift
