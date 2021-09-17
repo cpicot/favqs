@@ -6,12 +6,22 @@
 //
 
 import UIKit
+import RxSwift
+import Reusable
 
 final class FavouritesViewController: UIViewController {
+
     // MARK: - Outlets
+    @IBOutlet private weak var tableView: UITableView!
 
     // MARK: - Private Properties
     private weak var delegate: FavouriteDelegate?
+    private enum SectionsType: Int, CaseIterable {
+        case profile
+        case favourites
+    }
+    private var userFavouritesViewModel: UserFavouritesViewModel?
+    private var disposeBag: DisposeBag = DisposeBag()
 
     // MARK: - Setup
     static func instantiate(webServiceClient: WebServiceClient,
@@ -24,6 +34,15 @@ final class FavouritesViewController: UIViewController {
     // MARK: - Override Funcs
     override func viewDidLoad() {
         super.viewDidLoad()
+
+        tableView.register(cellType: UserTableViewCell.self)
+        tableView.register(cellType: QuoteTableViewCell.self)
+        tableView.dataSource = self
+        tableView.rowHeight = UITableView.automaticDimension
+
+        userFavouritesViewModel = UserFavouritesViewModel()
+        userFavouritesViewModel?.delegate = self // Use adapted instead to handle datasource
+        userFavouritesViewModel?.refreshContent()
     }
 }
 
@@ -34,10 +53,55 @@ private extension FavouritesViewController {
     }
 }
 
+extension FavouritesViewController: ViewModelDelegate {
+    func refresh() {
+        DispatchQueue.main.async { [weak self] in
+            self?.tableView.reloadData()
+        }
+    }
+}
+
 // MARK: - Private Funcs
 private extension FavouritesViewController {
     func logout() {
-        // Reset keychain
-        delegate?.logout()
+        LogoutUseCase().execute()
+            .observe(on: MainScheduler.instance)
+            .subscribe(onSuccess: { [weak self] _ in
+                self?.delegate?.logout()
+            })
+            .disposed(by: disposeBag)
     }
+}
+
+extension FavouritesViewController: UITableViewDataSource {
+    func numberOfSections(in tableView: UITableView) -> Int {
+        SectionsType.allCases.count
+    }
+
+    func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
+        guard let sectionType = SectionsType(rawValue: section) else { return 0 }
+
+        switch sectionType {
+        case .profile:
+            return 1
+        case .favourites:
+            return userFavouritesViewModel?.quotes.count ?? 0
+        }
+    }
+
+    func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
+        guard let sectionType = SectionsType(rawValue: indexPath.section) else { return UITableViewCell() }
+
+        switch sectionType {
+        case .profile:
+            let cell = tableView.dequeueReusableCell(for: indexPath, cellType: UserTableViewCell.self)
+            userFavouritesViewModel?.setup(userCell: cell)
+            return cell
+        case .favourites:
+            let cell = tableView.dequeueReusableCell(for: indexPath, cellType: QuoteTableViewCell.self)
+            userFavouritesViewModel?.setup(quoteCell: cell, for: indexPath.row)
+            return cell
+        }
+    }
+
 }

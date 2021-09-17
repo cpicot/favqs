@@ -39,8 +39,7 @@ class AppCoordinator: Coordinator {
     }
 
     func launch() {
-        let isLogged = false
-        if isLogged {
+        if KeychainService.shared.token != nil {
             showApp()
         } else {
             showLogin()

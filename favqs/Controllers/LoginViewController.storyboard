@@ -19,27 +19,41 @@
                         <rect key="frame" x="0.0" y="0.0" width="375" height="667"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
-                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Login" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="bYw-At-kxR">
-                                <rect key="frame" x="147" y="313" width="81" height="41"/>
-                                <fontDescription key="fontDescription" type="system" pointSize="34"/>
-                                <nil key="textColor"/>
-                                <nil key="highlightedColor"/>
-                            </label>
-                            <button opaque="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="SRv-wA-ZwF">
-                                <rect key="frame" x="168" y="455" width="38" height="30"/>
-                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
-                                <state key="normal" title="Login"/>
-                                <connections>
-                                    <action selector="loginTouchUpInside:" destination="om2-Bk-pxl" eventType="touchUpInside" id="e3E-Wg-dBi"/>
-                                </connections>
-                            </button>
+                            <stackView opaque="NO" contentMode="scaleToFill" axis="vertical" spacing="24" translatesAutoresizingMaskIntoConstraints="NO" id="CfU-o3-fty">
+                                <rect key="frame" x="46" y="30" width="283" height="146"/>
+                                <subviews>
+                                    <textField opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" borderStyle="roundedRect" placeholder="email or login" textAlignment="natural" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="WXp-y4-g4D">
+                                        <rect key="frame" x="0.0" y="0.0" width="283" height="34"/>
+                                        <fontDescription key="fontDescription" type="system" pointSize="14"/>
+                                        <textInputTraits key="textInputTraits"/>
+                                    </textField>
+                                    <textField opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" borderStyle="roundedRect" placeholder="password" textAlignment="natural" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="tcb-sp-qRl">
+                                        <rect key="frame" x="0.0" y="58" width="283" height="34"/>
+                                        <fontDescription key="fontDescription" type="system" pointSize="14"/>
+                                        <textInputTraits key="textInputTraits"/>
+                                    </textField>
+                                    <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="SRv-wA-ZwF">
+                                        <rect key="frame" x="0.0" y="116" width="283" height="30"/>
+                                        <state key="normal" title="Login"/>
+                                        <connections>
+                                            <action selector="loginTouchUpInside:" destination="om2-Bk-pxl" eventType="touchUpInside" id="e3E-Wg-dBi"/>
+                                        </connections>
+                                    </button>
+                                </subviews>
+                            </stackView>
                         </subviews>
                         <color key="backgroundColor" white="0.66666666666666663" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                         <constraints>
-                            <constraint firstItem="bYw-At-kxR" firstAttribute="centerY" secondItem="Wf3-fd-o0X" secondAttribute="centerY" id="P1I-d7-B9F"/>
-                            <constraint firstItem="bYw-At-kxR" firstAttribute="centerX" secondItem="Wf3-fd-o0X" secondAttribute="centerX" id="una-Vh-7YT"/>
+                            <constraint firstAttribute="trailingMargin" secondItem="CfU-o3-fty" secondAttribute="trailing" constant="30" id="hxa-ki-q7f"/>
+                            <constraint firstItem="CfU-o3-fty" firstAttribute="leading" secondItem="Wf3-fd-o0X" secondAttribute="leadingMargin" constant="30" id="qM3-RI-7dE"/>
+                            <constraint firstItem="CfU-o3-fty" firstAttribute="top" secondItem="C1A-cC-ySo" secondAttribute="bottom" constant="30" id="uJ9-ls-lO5"/>
                         </constraints>
                     </view>
+                    <connections>
+                        <outlet property="emailTextField" destination="WXp-y4-g4D" id="aMM-d3-3Lw"/>
+                        <outlet property="loginButton" destination="SRv-wA-ZwF" id="D5D-RV-bvg"/>
+                        <outlet property="passwordTextField" destination="tcb-sp-qRl" id="Vcn-TB-cVe"/>
+                    </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="Ji5-JS-vrB" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
