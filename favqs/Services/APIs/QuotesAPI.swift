@@ -16,7 +16,7 @@ class QuotesAPI: WebServiceClient {
     }
 
     func favourites(login: String,
-                    completion: @escaping (QuotesResponse?, Error?) -> Void) {
+                    completion: @escaping (QuotesResponse?, CustomError?) -> Void) {
         guard let favUrl = url,
               let headers = self.authHeaders,
               var urlComponents = URLComponents(url: favUrl, resolvingAgainstBaseURL: false)
@@ -38,8 +38,8 @@ class QuotesAPI: WebServiceClient {
             case .success(let value):
                 completion(value, nil)
             case .failure(let error):
-                self?.handleError(responseData: response.data, error: error)
-                completion(nil, error)
+                let customError = self?.handleError(responseData: response.data, error: error)
+                completion(nil, customError)
             }
         }
     }

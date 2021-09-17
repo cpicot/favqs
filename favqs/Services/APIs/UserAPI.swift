@@ -25,13 +25,14 @@ class UserAPI: WebServiceClient {
         request.httpMethod = HTTPMethod.get.rawValue
         request.headers = headers
 
-        AF.request(request).response {
-            (response) in
-            if let data = response.data,
-               let user = try? JSONDecoder().decode(UserResponse.self, from: data) {
-                completion(user, nil)
-            } else {
-                completion(nil, nil) // handle errors
+        AF.request(request).responseDecodable(of: UserResponse.self) { [weak self] response in
+
+            switch response.result {
+            case .success(let value):
+                completion(value, nil)
+            case .failure(let error):
+                let customError = self?.handleError(responseData: response.data, error: error)
+                completion(nil, customError)
             }
         }
     }

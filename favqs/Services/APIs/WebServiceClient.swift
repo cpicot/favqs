@@ -10,7 +10,7 @@ import Alamofire
 
 enum CustomError: Error {
     case defaultError(Error)
-    case favqsError(SessionResponseError)
+    case favqsError(CustomResponseError)
 }
 extension CustomError: CustomStringConvertible {
     public var description: String {
@@ -49,7 +49,7 @@ class WebServiceClient {
 
     func handleError(responseData: Data?, error: Error) -> CustomError {
         if let data = responseData,
-           let sessionError = try? JSONDecoder().decode(SessionResponseError.self, from: data) {
+           let sessionError = try? JSONDecoder().decode(CustomResponseError.self, from: data) {
             // Handle custom error
             return CustomError.favqsError(sessionError)
         } else {

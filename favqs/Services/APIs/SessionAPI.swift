@@ -17,7 +17,6 @@ class SessionAPI: WebServiceClient {
 
     func createSession(credantials: FavqsSession,
                        completion: @escaping (SessionResponse?, CustomError?) -> Void) {
-    // -> Single<SessionResponse> {
         guard let url = sessionUrl,
               let data = try? JSONEncoder().encode(credantials)
         else {

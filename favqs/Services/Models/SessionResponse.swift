@@ -7,23 +7,6 @@
 
 import Foundation
 
-enum FavqsError: Error {
-    case invalidCredential
-    case notActive
-    case missingField
-
-    var code: Int {
-        switch self {
-        case .invalidCredential:
-            return 21
-        case .notActive:
-            return 22
-        case .missingField:
-            return 23
-        }
-    }
-}
-
 // TODO: split these structs in multiples files
 
 // MARK: - SessionResponse
@@ -47,8 +30,7 @@ struct User: Codable {
 }
 
 // MARK: - SessionResponseError
-// TODO/ rename to CustomResponseError
-struct SessionResponseError: Codable {
+struct CustomResponseError: Codable {
     let errorCode: Int
     let message: String
 
