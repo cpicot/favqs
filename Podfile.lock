@@ -23,6 +23,11 @@ PODS:
     - Reusable/View (= 4.1.1)
   - Reusable/Storyboard (4.1.1)
   - Reusable/View (4.1.1)
+  - RxCocoa (6.2.0):
+    - RxRelay (= 6.2.0)
+    - RxSwift (= 6.2.0)
+  - RxRelay (6.2.0):
+    - RxSwift (= 6.2.0)
   - RxSwift (6.2.0)
   - SwiftGen (6.4.0)
   - SwiftLint (0.43.1)
@@ -33,6 +38,7 @@ DEPENDENCIES:
   - AlamofireImage
   - KeychainAccess
   - Reusable
+  - RxCocoa
   - RxSwift
   - SwiftGen
   - SwiftLint
@@ -44,6 +50,8 @@ SPEC REPOS:
     - AlamofireImage
     - KeychainAccess
     - Reusable
+    - RxCocoa
+    - RxRelay
     - RxSwift
     - SwiftGen
     - SwiftLint
@@ -54,10 +62,12 @@ SPEC CHECKSUMS:
   AlamofireImage: 34a2d90b0e5fe6a5605f85ae4b7b01e784c60192
   KeychainAccess: c0c4f7f38f6fc7bbe58f5702e25f7bd2f65abf51
   Reusable: 53a9acf5c536f229b31b5865782414b508252ddb
+  RxCocoa: 4baf94bb35f2c0ab31bc0cb9f1900155f646ba42
+  RxRelay: e72dbfd157807478401ef1982e1c61c945c94b2f
   RxSwift: d356ab7bee873611322f134c5f9ef379fa183d8f
   SwiftGen: 67860cc7c3cfc2ed25b9b74cfd55495fc89f9108
   SwiftLint: 99f82d07b837b942dd563c668de129a03fc3fb52
 
-PODFILE CHECKSUM: fd8015d333e81701ff34b6a2b9ac0d8a258b7480
+PODFILE CHECKSUM: cb508c85cbea013cae4f58ecd785d2462f20958e
 
 COCOAPODS: 1.10.1

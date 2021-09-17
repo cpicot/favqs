@@ -20,29 +20,44 @@
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
                             <stackView opaque="NO" contentMode="scaleToFill" axis="vertical" spacing="24" translatesAutoresizingMaskIntoConstraints="NO" id="CfU-o3-fty">
-                                <rect key="frame" x="46" y="30" width="283" height="146"/>
+                                <rect key="frame" x="46" y="30" width="283" height="302"/>
                                 <subviews>
+                                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Fav Quotes" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="qA2-Jo-Ize">
+                                        <rect key="frame" x="0.0" y="0.0" width="283" height="26.5"/>
+                                        <fontDescription key="fontDescription" type="system" pointSize="22"/>
+                                        <nil key="textColor"/>
+                                        <nil key="highlightedColor"/>
+                                    </label>
+                                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Sign In" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="Z9o-Hb-9o2">
+                                        <rect key="frame" x="0.0" y="50.5" width="283" height="20.5"/>
+                                        <fontDescription key="fontDescription" type="system" pointSize="17"/>
+                                        <nil key="textColor"/>
+                                        <nil key="highlightedColor"/>
+                                    </label>
                                     <textField opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" borderStyle="roundedRect" placeholder="email or login" textAlignment="natural" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="WXp-y4-g4D">
-                                        <rect key="frame" x="0.0" y="0.0" width="283" height="34"/>
+                                        <rect key="frame" x="0.0" y="95" width="283" height="34"/>
                                         <fontDescription key="fontDescription" type="system" pointSize="14"/>
-                                        <textInputTraits key="textInputTraits"/>
+                                        <textInputTraits key="textInputTraits" autocorrectionType="no" returnKeyType="continue" enablesReturnKeyAutomatically="YES"/>
                                     </textField>
                                     <textField opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" borderStyle="roundedRect" placeholder="password" textAlignment="natural" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="tcb-sp-qRl">
-                                        <rect key="frame" x="0.0" y="58" width="283" height="34"/>
+                                        <rect key="frame" x="0.0" y="153" width="283" height="34"/>
                                         <fontDescription key="fontDescription" type="system" pointSize="14"/>
-                                        <textInputTraits key="textInputTraits"/>
+                                        <textInputTraits key="textInputTraits" returnKeyType="done" enablesReturnKeyAutomatically="YES" secureTextEntry="YES"/>
                                     </textField>
                                     <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="SRv-wA-ZwF">
-                                        <rect key="frame" x="0.0" y="116" width="283" height="30"/>
-                                        <state key="normal" title="Login"/>
+                                        <rect key="frame" x="0.0" y="211" width="283" height="30"/>
+                                        <state key="normal" title="Sign in"/>
                                         <connections>
                                             <action selector="loginTouchUpInside:" destination="om2-Bk-pxl" eventType="touchUpInside" id="e3E-Wg-dBi"/>
                                         </connections>
                                     </button>
+                                    <activityIndicatorView opaque="NO" contentMode="scaleToFill" horizontalHuggingPriority="750" verticalHuggingPriority="750" animating="YES" style="large" translatesAutoresizingMaskIntoConstraints="NO" id="JG9-X3-TRX">
+                                        <rect key="frame" x="0.0" y="265" width="283" height="37"/>
+                                    </activityIndicatorView>
                                 </subviews>
                             </stackView>
                         </subviews>
-                        <color key="backgroundColor" white="0.66666666666666663" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                        <color key="backgroundColor" red="0.84310154755090927" green="0.84310154755090927" blue="0.84310154755090927" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                         <constraints>
                             <constraint firstAttribute="trailingMargin" secondItem="CfU-o3-fty" secondAttribute="trailing" constant="30" id="hxa-ki-q7f"/>
                             <constraint firstItem="CfU-o3-fty" firstAttribute="leading" secondItem="Wf3-fd-o0X" secondAttribute="leadingMargin" constant="30" id="qM3-RI-7dE"/>
@@ -50,6 +65,7 @@
                         </constraints>
                     </view>
                     <connections>
+                        <outlet property="activityIndicator" destination="JG9-X3-TRX" id="Op0-Ce-3vv"/>
                         <outlet property="emailTextField" destination="WXp-y4-g4D" id="aMM-d3-3Lw"/>
                         <outlet property="loginButton" destination="SRv-wA-ZwF" id="D5D-RV-bvg"/>
                         <outlet property="passwordTextField" destination="tcb-sp-qRl" id="Vcn-TB-cVe"/>

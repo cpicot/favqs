@@ -13,6 +13,7 @@ target 'favqs' do
   pod 'Alamofire'
   pod 'AlamofireImage'
   pod 'KeychainAccess'
+  pod 'RxCocoa'
   #pod 'RealmSwift'
 
   target 'favqsTests' do
