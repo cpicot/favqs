@@ -10,6 +10,9 @@ target 'favqs' do
   pod 'Reusable'
   pod 'RxSwift'
   pod 'SwiftGen'
+  pod 'Alamofire'
+  pod 'AlamofireImage'
+  pod 'KeychainAccess'
   #pod 'RealmSwift'
 
   target 'favqsTests' do
