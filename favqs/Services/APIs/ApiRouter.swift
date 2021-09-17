@@ -27,6 +27,7 @@ enum ApiRouter: URLRequestConvertible {
 
     private var headers: HTTPHeaders {
         switch self {
+        // TODO: Handle authenticated call seession error
         case .getUserDetails,
              .favourites:
             return MyWebServiceClient.authHeaders ?? MyWebServiceClient.baseHeaders
