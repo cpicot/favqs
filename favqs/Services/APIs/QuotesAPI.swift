@@ -16,6 +16,7 @@ class QuotesAPI: WebServiceClient {
     }
 
     func favourites(login: String,
+                    page: Int,
                     completion: @escaping (QuotesResponse?, CustomError?) -> Void) {
         guard let favUrl = url,
               let headers = self.authHeaders,
@@ -23,7 +24,11 @@ class QuotesAPI: WebServiceClient {
         else { return }
 
         urlComponents.queryItems = [URLQueryItem(name: "filter", value: login),
-                               URLQueryItem(name: "type", value: "user")]
+                                    URLQueryItem(name: "type", value: "user"),
+                                    URLQueryItem(name: "page", value: "\(page)")]
+
+        // Uncomment this for paginaion test
+//        urlComponents.queryItems = [URLQueryItem(name: "page", value: "\(page)")]
 
         guard let favouriteUrl = urlComponents.url
         else { return }

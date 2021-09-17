@@ -25,22 +25,30 @@ final class UserFavouritesViewModel {
             delegate?.refresh()
         }
     }
-    private var hasMore = false
-    private var currentPage: Int = 0
+    private var hasMore = true
+    private var nextPage: Int = 0
 
     weak var delegate: ViewModelDelegate?
+    var hasUserContent: Bool {
+        currentUser != nil
+    }
 
-    func refreshContent() {
+    func refreshUserContent() {
         userUseCase.execute { [weak self] user in
             self?.currentUser = user
         }
-        favouritesUseCase.execute { [weak self] response in
+    }
+
+    func refreshFavouriteContent() {
+        guard hasMore else { return }
+
+        favouritesUseCase.execute(page: nextPage) { [weak self] response in
             guard let strongSelf = self,
                   let response = response else { return }
 
             strongSelf.quotes.append(contentsOf: response.quotes)
-            strongSelf.currentPage = response.page
-            strongSelf.hasMore = response.lastPage
+            strongSelf.nextPage = response.page + 1
+            strongSelf.hasMore = !response.lastPage
         }
     }
 

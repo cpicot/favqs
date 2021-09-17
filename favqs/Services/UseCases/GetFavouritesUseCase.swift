@@ -11,10 +11,11 @@ final class GetFavouritesUseCase {
     private let api = QuotesAPI()
 
     func execute(login: String? = KeychainService.shared.login,
+                 page: Int,
                  completion: @escaping (QuotesResponse?) -> Void) {
         guard let login = login else { return }
 
-        api.favourites(login: login) { quotesResponse, _ in
+        api.favourites(login: login, page: page) { quotesResponse, _ in
             completion(quotesResponse)
         }
     }

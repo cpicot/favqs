@@ -37,12 +37,15 @@ final class FavouritesViewController: UIViewController {
 
         tableView.register(cellType: UserTableViewCell.self)
         tableView.register(cellType: QuoteTableViewCell.self)
-        tableView.dataSource = self
         tableView.rowHeight = UITableView.automaticDimension
+        // TODO: Use adapted instead to handle datasource
+        tableView.dataSource = self
+        tableView.delegate = self
 
         userFavouritesViewModel = UserFavouritesViewModel()
-        userFavouritesViewModel?.delegate = self // Use adapted instead to handle datasource
-        userFavouritesViewModel?.refreshContent()
+        userFavouritesViewModel?.delegate = self
+        userFavouritesViewModel?.refreshUserContent()
+        userFavouritesViewModel?.refreshFavouriteContent()
     }
 }
 
@@ -83,7 +86,7 @@ extension FavouritesViewController: UITableViewDataSource {
 
         switch sectionType {
         case .profile:
-            return 1
+            return userFavouritesViewModel?.hasUserContent == true ? 1 : 0
         case .favourites:
             return userFavouritesViewModel?.quotes.count ?? 0
         }
@@ -104,4 +107,19 @@ extension FavouritesViewController: UITableViewDataSource {
         }
     }
 
+}
+
+extension FavouritesViewController: UITableViewDelegate {
+    func tableView(_ tableView: UITableView,
+                   willDisplay cell: UITableViewCell,
+                   forRowAt indexPath: IndexPath) {
+
+        guard let sectionType = SectionsType(rawValue: indexPath.section)
+            else { return }
+
+        if sectionType == .favourites,
+           indexPath.row + 1 == userFavouritesViewModel?.quotes.count {
+            userFavouritesViewModel?.refreshFavouriteContent()
+        }
+    }
 }
