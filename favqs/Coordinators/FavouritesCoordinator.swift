@@ -35,9 +35,10 @@ final class FavouritesCoordinator: NavCoordinator {
             let controller: UIViewController = FavouritesViewController
                 .instantiate(webServiceClient: strongSelf.webServiceClient,
                              coordinator: strongSelf)
-            strongSelf.mainViewController = controller
+            let nav = UINavigationController(rootViewController: controller)
+            strongSelf.mainViewController = nav
 
-            single(.success(controller))
+            single(.success(nav))
 
             return Disposables.create {}
         }

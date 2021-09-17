@@ -35,10 +35,17 @@ final class FavouritesViewController: UIViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
 
+        self.title = "Fav Quotes"
+        let logoutButton = UIBarButtonItem(title: "Logout",
+                        style: .done,
+                        target: self,
+                        action: #selector(logoutTouchUpInside))
+        self.navigationItem.rightBarButtonItem = logoutButton
+
         tableView.register(cellType: UserTableViewCell.self)
         tableView.register(cellType: QuoteTableViewCell.self)
         tableView.rowHeight = UITableView.automaticDimension
-        // TODO: Use adapted instead to handle datasource
+        // TODO: Use adapter instead to handle datasource
         tableView.dataSource = self
         tableView.delegate = self
 
@@ -121,5 +128,10 @@ extension FavouritesViewController: UITableViewDelegate {
            indexPath.row + 1 == userFavouritesViewModel?.quotes.count {
             userFavouritesViewModel?.refreshFavouriteContent()
         }
+    }
+
+    func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
+        // TODO: display all quote content
+        // by expanding cell or calling coordinator to show a detail view
     }
 }
