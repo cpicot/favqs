@@ -25,7 +25,7 @@ final class LoginViewController: UIViewController {
     }
 
     // MARK: - Private Properties
-    private let loginUseCase = LoginUseCase()
+    private var loginUseCase: LoginUseCase?
     private weak var delegate: LoginDelegate?
     private let disposeBag: DisposeBag = DisposeBag()
 
@@ -34,12 +34,18 @@ final class LoginViewController: UIViewController {
                             delegate: LoginDelegate) -> UIViewController {
         let viewController = StoryboardScene.LoginViewController.loginViewController.instantiate()
         viewController.delegate = delegate
+        viewController.loginUseCase = LoginUseCase(client: webServiceClient)
         return viewController
     }
 
     // MARK: - Override Funcs
     override func viewDidLoad() {
         super.viewDidLoad()
+
+        // TODO: remove this, moked values
+        emailTextField.text = "clement"
+        passwordTextField.text = "123456"
+        loginButton.isEnabled = true
 
         // setup input events
         emailTextField.rx.controlEvent(.editingDidEndOnExit)
@@ -82,26 +88,21 @@ private extension LoginViewController {
 
         self.isLoading(true)
 
-        loginUseCase.execute(email: email,
-                             password: password) { [weak self] success, error in
-            guard let strongSelf = self else { return }
-
-            strongSelf.isLoading(false)
-
-            if success {
-                strongSelf.delegate?.launchApp()
-            } else {
-                let alert = UIAlertController(title: "Login error",
-                                              message: error?.description,
-                                              preferredStyle: .alert)
-                alert.addAction(UIAlertAction(title: "Ok",
-                                              style: .cancel,
-                                              handler: nil))
-                strongSelf.present(alert,
-                                   animated: true,
-                                   completion: nil)
-            }
-        }
+        loginUseCase?.execute(email: email,
+                             password: password)
+            .observe(on: MainScheduler.instance)
+            .subscribe(onSuccess: { [weak self] success in
+                self?.delegate?.launchApp()
+            }, onFailure: { [weak self] error in
+                if let customeError = error as? CustomError {
+                    self?.showAlert(message: customeError.description)
+                } else {
+                    self?.showAlert(message: error.localizedDescription)
+                }
+            }, onDisposed: { [weak self] in
+                self?.isLoading(false)
+            })
+            .disposed(by: self.disposeBag)
     }
 
     func isLoading(_ isLoading: Bool) {
@@ -109,5 +110,18 @@ private extension LoginViewController {
         activityIndicator.isHidden = !isLoading
         emailTextField.isEnabled = !isLoading
         passwordTextField.isEnabled = !isLoading
+    }
+
+    func showAlert(message: String?) {
+        let alert = UIAlertController(title: "Login error",
+                                      message: message,
+                                      preferredStyle: .alert)
+        alert.addAction(UIAlertAction(title: "Ok",
+                                      style: .cancel,
+                                      handler: nil))
+        self.present(alert,
+                           animated: true,
+                           completion: nil)
+
     }
 }

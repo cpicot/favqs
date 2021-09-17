@@ -7,7 +7,6 @@
 
 import Foundation
 
-
 // MARK: - QuotesResponse
 struct QuotesResponse: Codable {
     let page: Int

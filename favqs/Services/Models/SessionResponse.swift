@@ -7,6 +7,16 @@
 
 import Foundation
 
+extension Encodable {
+    var asDictionary: [String: Any]? {
+        guard let data = try? JSONEncoder().encode(self),
+              let dictionary = try? JSONSerialization.jsonObject(with: data, options: .allowFragments) as? [String: Any] else {
+            return nil
+        }
+        return dictionary
+    }
+}
+
 // TODO: split these structs in multiples files
 
 // MARK: - SessionResponse

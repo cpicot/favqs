@@ -8,15 +8,23 @@
 import RxSwift
 
 final class GetUserUseCase {
-    private let api = UserAPI()
+    private let webServiceClient: WebServiceClient
 
-    func execute(login: String? = KeychainService.shared.login,
-                 completion: @escaping (UserResponse?) -> Void) {
-        guard let login = login else { return }
-        
-        api.userDetails(login: login) { user, _ in
-            completion(user)
-        }
+    init(client: WebServiceClient) {
+        webServiceClient = client
+    }
+
+    func execute(login: String? = KeychainService.shared.login) -> Single<UserResponse?> {
+        guard let login = login else { return Single.just(nil) }
+
+        return webServiceClient.getUserDetails(login: login)
+            .asSingle()
+            .flatMap { userResponse -> Single<UserResponse?> in
+                // In case we use a data base (ex realm), we store userResponse here
+                // and return a empty single (to stop loading for example)
+                // (assuming realm is observed in view model)
+                return Single.just(userResponse)
+            }
     }
 
 }

@@ -5,22 +5,23 @@
 //  Created by Clement Picot on 16/09/2021.
 //
 
-import Foundation
+import RxSwift
 
 final class LoginUseCase {
-    private let api = SessionAPI()
+    private let webServiceClient: WebServiceClient
+
+    init(client: WebServiceClient) {
+        webServiceClient = client
+    }
 
     func execute(email: String,
-                 password: String,
-                 completion: @escaping (Bool, CustomError?) -> Void) {
+                 password: String) -> Single<Bool> {
         let credentials = FavqsSession(user: User(login: email, password: password))
-        api.createSession(credantials: credentials, completion: { session, error in
-            if let session = session {
-                KeychainService.shared.updateCredantials(session: session)
-                completion(true, nil)
-            } else {
-                completion(false, error)
+        return webServiceClient.createSession(credantials: credentials)
+            .asSingle()
+            .flatMap { response -> Single<Bool> in
+                KeychainService.shared.updateCredantials(session: response)
+                return Single.just(true)
             }
-        })
     }
 }

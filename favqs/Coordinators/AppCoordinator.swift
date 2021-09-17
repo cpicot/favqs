@@ -28,9 +28,9 @@ class AppCoordinator: Coordinator {
 
     init(window: UIWindow) {
         self.window = window
-        //            self.mainViewController = StoryboardScene.WaitingViewController.initialScene.instantiate()
 
-        self.webServiceClient = WebServiceClient()
+        // resolve webServiceClient here
+        self.webServiceClient = MyWebServiceClient()
     }
 
     func start() -> Single<UIViewController> {

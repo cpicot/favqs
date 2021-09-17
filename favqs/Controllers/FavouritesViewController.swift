@@ -28,6 +28,7 @@ final class FavouritesViewController: UIViewController {
                             coordinator: FavouriteDelegate) -> FavouritesViewController {
         let viewController = StoryboardScene.FavouritesViewController.initialScene.instantiate()
         viewController.delegate = coordinator
+        viewController.userFavouritesViewModel = UserFavouritesViewModel(webServiceClient: webServiceClient)
         return viewController
     }
 
@@ -49,7 +50,6 @@ final class FavouritesViewController: UIViewController {
         tableView.dataSource = self
         tableView.delegate = self
 
-        userFavouritesViewModel = UserFavouritesViewModel()
         userFavouritesViewModel?.delegate = self
         userFavouritesViewModel?.refreshUserContent()
         userFavouritesViewModel?.refreshFavouriteContent()
