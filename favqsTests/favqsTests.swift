@@ -51,7 +51,7 @@ class favqsTests: XCTestCase {
         LoginUseCase(client: webServiceClient)
             .execute(email: "email", password: "pass")
             .observe(on: MainScheduler.instance)
-            .subscribe(onSuccess: { success in
+            .subscribe(onSuccess: { _ in
                 assert(true)
             }, onFailure: { _ in
                 assert(false)

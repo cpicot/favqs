@@ -15,13 +15,13 @@ final class LoginUseCase {
     }
 
     func execute(email: String,
-                 password: String) -> Single<Bool> {
+                 password: String) -> Single<Void> {
         let credentials = FavqsSession(user: User(login: email, password: password))
         return webServiceClient.createSession(credantials: credentials)
             .asSingle()
-            .flatMap { response -> Single<Bool> in
+            .flatMap { response -> Single<Void> in
                 KeychainService.shared.updateCredantials(session: response)
-                return Single.just(true)
+                return Single.just(Void())
             }
     }
 }

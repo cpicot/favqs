@@ -42,11 +42,6 @@ final class LoginViewController: UIViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
 
-        // TODO: remove this, moked values
-        emailTextField.text = "clement"
-        passwordTextField.text = "123456"
-        loginButton.isEnabled = true
-
         // setup input events
         emailTextField.rx.controlEvent(.editingDidEndOnExit)
             .subscribe(onNext: { [weak self] in
@@ -91,7 +86,7 @@ private extension LoginViewController {
         loginUseCase?.execute(email: email,
                              password: password)
             .observe(on: MainScheduler.instance)
-            .subscribe(onSuccess: { [weak self] success in
+            .subscribe(onSuccess: { [weak self] _ in
                 self?.delegate?.launchApp()
             }, onFailure: { [weak self] error in
                 if let customeError = error as? CustomError {
